@@ -9,8 +9,8 @@ import ua.dmjdev.dto.Rule;
 
 import java.time.LocalDateTime;
 
-@Data
 @Entity
+@Data
 public class RuleProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -24,6 +24,6 @@ public class RuleProgressService {
     public Rule fetchLongUnstudiedRule(List<RuleProgress> ruleProgressList) {
         List<RuleProgress> sortedByLastSuccessfulAttemptDateTime = ruleProgressList.stream()
                 .sorted(Comparator.comparing(RuleProgress::getLastSuccessfulAttemptDateTime)).toList();
-        return sortedByLastSuccessfulAttemptDateTime.get(new Random().nextInt(ruleProgressList.size() / 2)).getRule();
+        return sortedByLastSuccessfulAttemptDateTime.get(new Random().nextInt(ruleProgressList.size() / 4 * 3, ruleProgressList.size())).getRule();
     }
 }

@@ -8,7 +8,7 @@ import ua.dmjdev.dto.Rule;
 @Data
 public class TranslateTask {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String content;
     @Enumerated(EnumType.STRING)
