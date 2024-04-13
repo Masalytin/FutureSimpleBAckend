@@ -1,0 +1,12 @@
+package ua.dmjdev.models.usr;
+
+public enum State {
+    SELECT_LANGUAGE,
+    ENGLISH_LEVEL_TEST,
+    LESSON_IN_PROGRESS,
+    LEARN_VOCABULARY,
+    LEARN_GRAMMAR,
+    LEARN_LISTENING,
+    LEARN_READING,
+    LEARN_SPEAKING
+}

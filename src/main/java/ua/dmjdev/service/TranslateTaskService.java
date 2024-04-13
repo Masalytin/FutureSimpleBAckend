@@ -5,7 +5,7 @@ import org.springframework.ai.chat.prompt.AssistantPromptTemplate;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.stereotype.Service;
 import ua.dmjdev.dto.Rule;
-import ua.dmjdev.models.TranslateTask;
+import ua.dmjdev.models.tasks.TranslateTask;
 import ua.dmjdev.models.usr.User;
 import ua.dmjdev.repos.TranslateTaskRepository;
 

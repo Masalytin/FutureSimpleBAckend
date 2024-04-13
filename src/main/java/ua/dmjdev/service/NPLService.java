@@ -49,7 +49,7 @@ public class NPLService {
     }
 
     private static boolean isExcludedPOS(String posTag) {
-        return posTag.equals("DT") || posTag.startsWith("IN") || posTag.startsWith("PRP")
+        return posTag.equals("DT") || posTag.startsWith("IN") || posTag.startsWith("TO")
                 || posTag.startsWith("CC") || posTag.equals("UH") || posTag.equals("RP")
                 || posTag.startsWith("MD");
     }
