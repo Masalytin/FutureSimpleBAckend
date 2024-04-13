@@ -1,7 +1,6 @@
 package ua.dmjdev.controllers;
 
 import org.springframework.ai.chat.messages.Message;
-import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.prompt.AssistantPromptTemplate;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -10,7 +9,6 @@ import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.web.bind.annotation.*;
 import ua.dmjdev.dto.Rule;
 
-import javax.sound.midi.SysexMessage;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;

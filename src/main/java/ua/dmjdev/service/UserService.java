@@ -49,7 +49,7 @@ public class UserService {
     }
 
     public List<RuleProgress> getActualRuleProgressesForUser(User user) {
-        List<Rule> actualRules = Rule.getValueLessOrEqualLevel(user.getEnglishLevel());
+        List<Rule> actualRules = user.getLevel().getCurrentAndLessLevelsRules();
         return user.getProgressList().stream().filter(rp -> actualRules.contains(rp.getRule())).toList();
     }
 

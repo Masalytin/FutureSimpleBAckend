@@ -1,7 +1,7 @@
 package ua.dmjdev.models.dictionary;
 
 import jakarta.persistence.*;
-import ua.dmjdev.dto.EnglishLevel;
+import ua.dmjdev.dto.Level;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class WordsSet {
     @Id
     private int id;
     @Enumerated(EnumType.STRING)
-    private EnglishLevel level;
+    private Level level;
     @OneToMany
     private List<Word> words;
 }

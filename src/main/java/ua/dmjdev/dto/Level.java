@@ -1,7 +1,6 @@
 package ua.dmjdev.dto;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 public enum Level {
@@ -30,7 +29,7 @@ public enum Level {
             Rule.MODAL_VERBS_MAY_MIGHT,
             Rule.MODAL_VERBS_CAN_COULD,
             Rule.ADVERBS
-            )),
+    )),
     INTERMEDIATE(List.of(
             Rule.CONDITIONALS,
             Rule.USED_TO,
@@ -49,18 +48,23 @@ public enum Level {
     ));
 
 
-    private final Collection<Rule> rulesCollection;
+    private final List<Rule> rulesList;
 
-    Level(Collection<Rule> rulesCollection) {
-        this.rulesCollection = rulesCollection;
+    Level(List<Rule> rulesList) {
+        this.rulesList = rulesList;
     }
 
-    public Collection<Rule> getRules() {
-        return this.rulesCollection;
+    public List<Rule> getRules() {
+        return this.rulesList;
     }
 
-    public static Collection<Rule> getValuesByLevel(Level level) {
-        return level.rulesCollection;
+    public List<Rule> getCurrentAndLessLevelsRules() {
+        List<Rule> result = new ArrayList<>();
+        for (Level level : Level.values()) {
+            if (level.ordinal() <= this.ordinal()) {
+                result.addAll(level.getRules());
+            }
+        }
+        return result;
     }
-
 }
