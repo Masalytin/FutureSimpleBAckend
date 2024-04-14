@@ -1,12 +1,9 @@
 package ua.dmjdev.dto;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public enum Rule {
         TO_BE,
         ARTICLES,
+        PRONOUNS,
         WORD_ORDER,
         PRESENT_SIMPLE,
         PREPOSITIONS,
@@ -24,7 +21,7 @@ public enum Rule {
         GERUND,
         MODAL_VERBS_MUST,
         MODAL_VERBS_HAVE_TO,
-        RELATIVE_CLAUSES,
+        RELATIVE_PRONOUNS,
         MODAL_VERBS_SHOULD,
         MODAL_VERBS_MAY_MIGHT,
         MODAL_VERBS_CAN_COULD,

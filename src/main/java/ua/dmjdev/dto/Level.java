@@ -1,11 +1,11 @@
 package ua.dmjdev.dto;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public enum Level {
     BEGINNER(List.of(
+            Rule.PRONOUNS,
             Rule.TO_BE,
             Rule.ARTICLES,
             Rule.WORD_ORDER,
@@ -25,7 +25,7 @@ public enum Level {
             Rule.GERUND,
             Rule.MODAL_VERBS_MUST,
             Rule.MODAL_VERBS_HAVE_TO,
-            Rule.RELATIVE_CLAUSES,
+            Rule.RELATIVE_PRONOUNS,
             Rule.MODAL_VERBS_SHOULD,
             Rule.MODAL_VERBS_MAY_MIGHT,
             Rule.MODAL_VERBS_CAN_COULD,
