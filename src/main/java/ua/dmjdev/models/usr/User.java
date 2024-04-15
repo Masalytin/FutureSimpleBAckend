@@ -2,12 +2,11 @@ package ua.dmjdev.models.usr;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import ua.dmjdev.dto.Level;
+import ua.dmjdev.dto.EnglishLevel;
 import ua.dmjdev.models.dictionary.WordProgress;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +19,7 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     private List<RuleProgress> progressList;
     @Enumerated(EnumType.STRING)
-    private Level level;
+    private EnglishLevel englishLevel;
     @OneToMany(cascade = CascadeType.ALL)
     private List<WordProgress> dictionary;
     @Enumerated(EnumType.STRING)

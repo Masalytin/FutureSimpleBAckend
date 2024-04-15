@@ -3,8 +3,9 @@ package ua.dmjdev.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Level {
+public enum EnglishLevel {
     BEGINNER(List.of(
+            Rule.PRONOUNS,
             Rule.TO_BE,
             Rule.ARTICLES,
             Rule.WORD_ORDER,
@@ -24,7 +25,7 @@ public enum Level {
             Rule.GERUND,
             Rule.MODAL_VERBS_MUST,
             Rule.MODAL_VERBS_HAVE_TO,
-            Rule.RELATIVE_CLAUSES,
+            Rule.RELATIVE_PRONOUNS,
             Rule.MODAL_VERBS_SHOULD,
             Rule.MODAL_VERBS_MAY_MIGHT,
             Rule.MODAL_VERBS_CAN_COULD,
@@ -50,7 +51,7 @@ public enum Level {
 
     private final List<Rule> rulesList;
 
-    Level(List<Rule> rulesList) {
+    EnglishLevel(List<Rule> rulesList) {
         this.rulesList = rulesList;
     }
 
@@ -60,9 +61,9 @@ public enum Level {
 
     public List<Rule> getCurrentAndLessLevelsRules() {
         List<Rule> result = new ArrayList<>();
-        for (Level level : Level.values()) {
-            if (level.ordinal() <= this.ordinal()) {
-                result.addAll(level.getRules());
+        for (EnglishLevel englishLevel : EnglishLevel.values()) {
+            if (englishLevel.ordinal() <= this.ordinal()) {
+                result.addAll(englishLevel.getRules());
             }
         }
         return result;
