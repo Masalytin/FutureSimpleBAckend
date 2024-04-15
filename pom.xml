@@ -13,7 +13,7 @@
 
     <groupId>ua.dmjdev</groupId>
     <artifactId>FutureSimpleHackathon</artifactId>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -98,5 +98,22 @@
             </releases>
         </repository>
     </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

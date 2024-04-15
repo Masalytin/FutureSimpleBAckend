@@ -12,10 +12,10 @@ public class WordService {
         this.repository = repository;
     }
 
-    public Word saveWord(String term) {
+    // TODO: 15.04.2024 translate
+    public Word saveWord(String name) {
         Word word = new Word();
-        word.setTerm(term);
-        // TODO: 11.04.2024 Select word language level
+        word.setName(name);
         repository.save(word);
         return word;
     }

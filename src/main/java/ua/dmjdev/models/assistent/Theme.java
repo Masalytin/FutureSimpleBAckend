@@ -1,5 +1,8 @@
 package ua.dmjdev.models.assistent;
 
+import lombok.Getter;
+
+@Getter
 public enum Theme {
     IN_HOSPITAL("Doctor"),
     IN_TAXI("Taxi driver"),

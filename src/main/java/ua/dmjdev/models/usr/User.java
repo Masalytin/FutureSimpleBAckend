@@ -14,14 +14,8 @@ import java.util.Map;
 @Data
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private int experience;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<RuleProgress> progressList;
-    @Enumerated(EnumType.STRING)
-    private EnglishLevel englishLevel;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<WordProgress> dictionary;
     @Enumerated(EnumType.STRING)
     private State state;
     @ElementCollection(fetch = FetchType.EAGER)
@@ -29,6 +23,13 @@ public class User {
     @MapKeyJoinColumn(name = "param_key")
     @Column(name = "value", length = 1000)
     private Map<String, String> buffer;
+    @Enumerated(EnumType.STRING)
+    private EnglishLevel englishLevel;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<WordProgress> dictionary;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<RuleProgress> ruleProgressList;
+    private int experience;
     private LocalDateTime registrationDateTime;
     private LocalDate birthdate;
     @ElementCollection
