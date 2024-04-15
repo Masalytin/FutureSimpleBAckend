@@ -15,7 +15,10 @@ import java.util.*;
 public class TranslateTaskService {
     private final ChatClient chatClient;
     private final UserService userService;
-    private final PromptTemplate SENTENCE_BY_RULE_PROMPT_TEMPLATE = new AssistantPromptTemplate("Create a sentence for the following rule: {rule}. Send only the sentence.");
+    private final PromptTemplate SENTENCE_BY_RULE_PROMPT_TEMPLATE = new AssistantPromptTemplate("""
+            Create a sentence for the following rule: {rule}. Send only the sentence.
+            
+            """);
     private final TranslateTaskRepository translateTaskRepository;
 
     public TranslateTaskService(ChatClient chatClient, UserService userService,
@@ -25,8 +28,16 @@ public class TranslateTaskService {
         this.translateTaskRepository = translateTaskRepository;
     }
 
+    public TranslateTask getRandomForUser(User user) {
+        if (new Random().nextInt(0, 100) < 30) {
+            return translateTaskRepository.findRandomByRule(userService.getRuleForTaskForUser(user));
+        } else {
+            return generateRandomTaskForUser(user);
+        }
+    }
+
     public TranslateTask generateRandomTaskForUser(User user) {
-        TranslateTask generateTask = generateTaskByRule(userService.getRuleForNewTaskForUser(user));
+        TranslateTask generateTask = generateTaskByRule(userService.getRuleForTaskForUser(user));
         translateTaskRepository.save(generateTask);
         return generateTask;
     }
@@ -37,11 +48,5 @@ public class TranslateTaskService {
         String generatedSentence = chatClient.call(SENTENCE_BY_RULE_PROMPT_TEMPLATE.create(Map.of("rule", rule))).getResult().getOutput().getContent();
         result.setContent(generatedSentence);
         return result;
-    }
-
-    public void shuffleWords(String[] words) {
-        List<String> wordList = Arrays.asList(words);
-        Collections.shuffle(wordList, new Random());
-        wordList.toArray(words);
     }
 }

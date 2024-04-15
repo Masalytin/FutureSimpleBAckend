@@ -7,6 +7,7 @@ import ua.dmjdev.models.dictionary.WordProgress;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +16,6 @@ import java.util.Map;
 public class User {
     @Id
     private long id;
-    @Enumerated(EnumType.STRING)
-    private State state;
     private int experience;
     @OneToMany(cascade = CascadeType.ALL)
     private List<RuleProgress> progressList;
@@ -24,6 +23,8 @@ public class User {
     private Level level;
     @OneToMany(cascade = CascadeType.ALL)
     private List<WordProgress> dictionary;
+    @Enumerated(EnumType.STRING)
+    private State state;
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_buffer", joinColumns = @JoinColumn(name = "user_id"))
     @MapKeyJoinColumn(name = "param_key")
@@ -31,6 +32,10 @@ public class User {
     private Map<String, String> buffer;
     private LocalDateTime registrationDateTime;
     private LocalDate birthdate;
+    @ElementCollection
+    @CollectionTable(name = "interests", joinColumns = @JoinColumn(name = "entity_id"))
+    @Column(name = "interest")
+    private List<String> interests;
 
     public String getParamFromBuffer(String key) {
         String param = getBuffer().get(key);
@@ -46,6 +51,16 @@ public class User {
         } catch (IllegalStateException e) {
             return false;
         }
+    }
+
+    public void setState(State state) {
+        setState(state, false);
+    }
+
+    public void setState(State state, boolean clearBuffer) {
+        if (clearBuffer)
+            buffer.clear();
+        this.state = state;
     }
 
     public void addParamToBuffer(String key, String value) {

@@ -53,7 +53,7 @@ public class UserService {
         return user.getProgressList().stream().filter(rp -> actualRules.contains(rp.getRule())).toList();
     }
 
-    public Rule getRuleForNewTaskForUser(User user) {
+    public Rule getRuleForTaskForUser(User user) {
         int randomValueFromZeroToHundred = new Random().nextInt(100);
         if (randomValueFromZeroToHundred < 30) {
             return ruleProgressService.fetchLongUnstudiedRule(getActualRuleProgressesForUser(user));
