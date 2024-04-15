@@ -51,7 +51,7 @@ public class TranslateTaskControllers {
         if (task == null)
             return ResponseEntity.notFound().build();
         return switch (targetLanguage) {
-            case UA -> ResponseEntity.ok(task.getTranslate().equals(answear));
+            case UK -> ResponseEntity.ok(task.getTranslate().equals(answear));
             case EN -> ResponseEntity.ok(task.getContent().equals(answear));
         };
     }
