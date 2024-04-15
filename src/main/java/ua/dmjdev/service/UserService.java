@@ -29,7 +29,7 @@ public class UserService {
     public void addUserWordsProgressFromSentence(User user, String sentence) {
         Set<String> words = nplService.getWordsFromSentence(sentence);
         for (WordProgress wordProgress : user.getDictionary()) {
-            String word = wordProgress.getWord().getTerm();
+            String word = wordProgress.getWord().getName();
             if (words.contains(word)) {
                 wordProgress.incProgress();
                 words.remove(word);
@@ -50,7 +50,7 @@ public class UserService {
 
     public List<RuleProgress> getActualRuleProgressesForUser(User user) {
         List<Rule> actualRules = user.getEnglishLevel().getCurrentAndLessLevelsRules();
-        return user.getProgressList().stream().filter(rp -> actualRules.contains(rp.getRule())).toList();
+        return user.getRuleProgressList().stream().filter(rp -> actualRules.contains(rp.getRule())).toList();
     }
 
     public Rule getRuleForTaskForUser(User user) {
