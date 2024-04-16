@@ -1,8 +1,10 @@
 package ua.dmjdev.models.dictionary;
 
+import com.google.api.Usage;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ua.dmjdev.models.usr.User;
 
 @Entity
 @Data
@@ -11,6 +13,9 @@ public class WordProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @ManyToOne
     private Word word;
     private byte progress;
