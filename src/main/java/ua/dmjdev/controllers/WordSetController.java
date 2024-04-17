@@ -1,6 +1,7 @@
 package ua.dmjdev.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ua.dmjdev.dto.EnglishLevel;
 import ua.dmjdev.models.dictionary.Word;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/word-set")
 public class WordSetController {
     private final WordService wordService;
     private final WordSetRepository wordSetRepository;

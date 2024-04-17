@@ -1,7 +1,7 @@
 package ua.dmjdev.models.usr;
 
 public enum State {
-    SELECT_LANGUAGE,
+    SELECT_ENGLISH_LEVEL,
     ENGLISH_LEVEL_TEST,
     LESSON_IN_PROGRESS,
     LEARN_VOCABULARY,

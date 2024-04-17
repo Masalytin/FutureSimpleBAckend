@@ -28,7 +28,7 @@ services:
     container_name: learn-ai
     build: .
     ports:
-      - '5050:5050'
+      - '7050:7050'
     env_file:
       - .env
     depends_on:

@@ -50,7 +50,7 @@ public class TranslateTaskService {
         result.setRule(rule);
         String generatedSentence = chatClient.call(SENTENCE_BY_RULE_PROMPT_TEMPLATE.create(Map.of("rule", rule))).getResult().getOutput().getContent();
         result.setContent(generatedSentence);
-        result.setTranslate(translateService.translateText(generatedSentence, Language.EN, Language.UK));
+        result.setTranslate(translateService.translate(generatedSentence, Language.EN, Language.UK));
         return result;
     }
 }

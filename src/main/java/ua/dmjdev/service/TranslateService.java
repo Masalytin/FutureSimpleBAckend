@@ -18,11 +18,10 @@ public class TranslateService {
                 .getService();
     }
 
-    public String translateText(String text, Language sourceLanguage, Language targetLanguage) {
+    public String translate(String text, Language sourceLanguage, Language targetLanguage) {
         TranslateOption sourceLanguageOption = TranslateOption.sourceLanguage(sourceLanguage.name());
         TranslateOption targetLanguageOption = TranslateOption.targetLanguage(targetLanguage.name());
         Translation translation = translate.translate(text, sourceLanguageOption, targetLanguageOption);
         return translation.getTranslatedText();
     }
-
 }

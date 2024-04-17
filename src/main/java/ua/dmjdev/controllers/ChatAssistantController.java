@@ -2,12 +2,10 @@ package ua.dmjdev.controllers;
 
 import org.springframework.ai.chat.ChatClient;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi.ChatCompletionMessage.Role;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.dmjdev.models.assistent.ChatAssistant;
 import ua.dmjdev.models.assistent.Theme;
 import ua.dmjdev.models.usr.User;
@@ -18,6 +16,7 @@ import ua.dmjdev.service.ChatAssistantService;
 import java.util.Map;
 
 @RestController()
+@RequestMapping("/api/v1/chat-assistant")
 public class ChatAssistantController {
     private final ChatClient chatClient;
     private final ChatAssistantRepository repository;
@@ -38,10 +37,11 @@ public class ChatAssistantController {
     ) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null)
-            return ResponseEntity.notFound().build();
-        ChatAssistant chatAssistant = new ChatAssistant(theme);
+            return ResponseEntity.status(404).body(Map.of("Error", "user not found"));
+        ChatAssistant chatAssistant = new ChatAssistant(theme, user);
         chatAssistant.setUser(user);
-        String response = chatClient.call(new Prompt(chatAssistant.getSpringAIMessage())).getResult().getOutput().getContent();
+        String response = chatClient.call(new Prompt(chatAssistant.getSpringAIMessage(), service.CHAT_OPTIONS))
+                .getResult().getOutput().getContent();
         chatAssistant.addNewMessage(Role.ASSISTANT, response);
         repository.save(chatAssistant);
         return ResponseEntity.ok(Map.of(
@@ -57,14 +57,13 @@ public class ChatAssistantController {
             @RequestParam("new-message-text") String newMessageText
     ) {
         User user = userRepository.findById(userId).orElse(null);
-        // TODO: 15.04.2024 Rewrite with errors
         if (user == null)
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).body(Map.of("Error", "user not found"));
         ChatAssistant chatAssistant = repository.findById(chatId).orElse(null);
         if (chatAssistant == null)
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).body(Map.of("Error", "chat not found"));
         if (!chatAssistant.getUser().equals(user))
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(301).body(Map.of("Error", "User is not chat creator"));
         String response = service.getResponse(chatAssistant, newMessageText).getContent();
         chatAssistant.addNewMessage(Role.ASSISTANT, response);
         repository.save(chatAssistant);

@@ -5,10 +5,10 @@ import lombok.Data;
 import ua.dmjdev.dto.EnglishLevel;
 import ua.dmjdev.models.dictionary.WordProgress;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,6 +16,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    private String username;
+    private String password;
+    private String email;
+    @ElementCollection
+    @CollectionTable(name = "interests", joinColumns = @JoinColumn(name = "entity_id"))
+    @Column(name = "interest")
+    private List<String> interests;
+    @Enumerated(EnumType.STRING)
+    private EnglishLevel englishLevel;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<WordProgress> dictionary;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<RuleProgress> ruleProgressList;
+    private int experience;
+    private LocalDateTime registrationDateTime;
     @Enumerated(EnumType.STRING)
     private State state;
     @ElementCollection(fetch = FetchType.EAGER)
@@ -23,19 +38,6 @@ public class User {
     @MapKeyJoinColumn(name = "param_key")
     @Column(name = "value", length = 1000)
     private Map<String, String> buffer;
-    @Enumerated(EnumType.STRING)
-    private EnglishLevel englishLevel;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<WordProgress> dictionary;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<RuleProgress> ruleProgressList;
-    private int experience;
-    private LocalDateTime registrationDateTime;
-    private LocalDate birthdate;
-    @ElementCollection
-    @CollectionTable(name = "interests", joinColumns = @JoinColumn(name = "entity_id"))
-    @Column(name = "interest")
-    private List<String> interests;
 
     public String getParamFromBuffer(String key) {
         String param = getBuffer().get(key);

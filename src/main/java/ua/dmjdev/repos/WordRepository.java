@@ -6,5 +6,5 @@ import ua.dmjdev.models.dictionary.Word;
 
 @Repository
 public interface WordRepository extends JpaRepository<Word, Long> {
-
+    public Word findByName(String name);
 }

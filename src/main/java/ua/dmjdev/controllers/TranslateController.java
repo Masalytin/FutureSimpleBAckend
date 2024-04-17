@@ -1,12 +1,12 @@
 package ua.dmjdev.controllers;
 
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.dmjdev.dto.Language;
 import ua.dmjdev.service.TranslateService;
 
 @RestController
-@RequestMapping("/translate")
+@RequestMapping("/api/v1/translate")
 public class TranslateController {
     private final TranslateService translateService;
 
@@ -14,13 +14,15 @@ public class TranslateController {
         this.translateService = translateService;
     }
 
-    @GetMapping("/")
-    @ResponseStatus(HttpStatus.OK)
-    public String getTranslation(@RequestParam String text, @RequestParam String sourceLanguage,
-                                 @RequestParam String targetLanguage) {
+    @GetMapping("/get-translation")
+    public ResponseEntity<String> getTranslation(
+            @RequestParam String text,
+            @RequestParam String sourceLanguage,
+            @RequestParam String targetLanguage
+    ) {
         try {
-            return translateService.translateText(text, Language.valueOf(sourceLanguage),
-                    Language.valueOf(targetLanguage));
+            return ResponseEntity.ok(translateService.translate(text, Language.valueOf(sourceLanguage),
+                    Language.valueOf(targetLanguage)));
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Illegal language");
         }
