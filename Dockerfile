@@ -30,4 +30,4 @@ RUN mvn clean
 
 RUN mvn -DskipTests package
 
-ENTRYPOINT ["java", "-jar", "target/FutureSimpleHackathon-0.0.6.jar"]
+ENTRYPOINT ["java", "-jar", "target/LearnAI.jar"]
