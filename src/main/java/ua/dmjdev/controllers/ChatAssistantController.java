@@ -37,7 +37,7 @@ public class ChatAssistantController {
     ) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null)
-            return ResponseEntity.status(404).body(Map.of("Error", "user not found"))
+            return ResponseEntity.status(404).body(Map.of("Error", "user not found"));
         ChatAssistant chatAssistant = new ChatAssistant(theme, user);
         chatAssistant.setUser(user);
         String response = chatClient.call(new Prompt(chatAssistant.getSpringAIMessage(), service.CHAT_OPTIONS))

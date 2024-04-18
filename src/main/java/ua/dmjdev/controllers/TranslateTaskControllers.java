@@ -44,7 +44,7 @@ public class TranslateTaskControllers {
     public ResponseEntity<?> getRandomTaskForUser(@RequestParam("user_id") long userId) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null)
-            return ResponseEntity.status(404).body(Map.of("Error", "task not found"))
+            return ResponseEntity.status(404).body(Map.of("Error", "task not found"));
         TranslateTask newTask = service.generateRandomTaskForUser(user);
         return ResponseEntity.ok(newTask);
     }
