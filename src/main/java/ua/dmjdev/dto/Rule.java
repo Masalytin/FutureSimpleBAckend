@@ -1,9 +1,9 @@
 package ua.dmjdev.dto;
 
 public enum Rule {
+    PRONOUNS,
     TO_BE,
     ARTICLES,
-    PRONOUNS,
     WORD_ORDER,
     PRESENT_SIMPLE,
     PREPOSITIONS,
@@ -14,6 +14,7 @@ public enum Rule {
     PAST_CONTINUOUS,
     SOME_ANY_NO,
     DEGREE_OF_COMPARISON,
+    ADVERBS,
     FUTURE_SIMPLE,
     TO_BE_GOING_TO,
     PRESENT_PERFECT,
@@ -25,7 +26,6 @@ public enum Rule {
     MODAL_VERBS_SHOULD,
     MODAL_VERBS_MAY_MIGHT,
     MODAL_VERBS_CAN_COULD,
-    ADVERBS,
 
     CONDITIONALS,
     USED_TO,
@@ -35,7 +35,6 @@ public enum Rule {
     AGREEMENT_OF_TENSES,
     PRESENT_PERFECT_CONTINUOUS,
     PASSIVE_VOICE,
-    IRREGULAR_PLURAL_FORMS,
 
     PUNCTUATION,
     FUTURE_PERFECT_CONTINUOUS,
