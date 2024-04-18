@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@RestController
 @RequestMapping("/api/v1/translate-task")
 public class TranslateTaskControllers {
     private final TranslateTaskRepository repository;

@@ -12,12 +12,14 @@ import ua.dmjdev.models.assistent.ChatAssistant;
 @Service
 public class ChatAssistantService {
     private final ChatClient chatClient;
-    public final OpenAiChatOptions CHAT_OPTIONS = new OpenAiChatOptions(){{
-        setModel("gpt-4");
-        setTemperature(0.8f);
-        setMaxTokens(50);
-        setTopP(0.7f);
-    }};
+    public final OpenAiChatOptions CHAT_OPTIONS = new OpenAiChatOptions();
+
+    {
+        CHAT_OPTIONS.setModel("gpt-4");
+        CHAT_OPTIONS.setTemperature(0.8f);
+        CHAT_OPTIONS.setMaxTokens(50);
+        CHAT_OPTIONS.setTopP(0.7f);
+    }
 
     public ChatAssistantService(ChatClient chatClient) {
         this.chatClient = chatClient;
