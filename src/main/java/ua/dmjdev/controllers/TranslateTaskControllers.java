@@ -67,7 +67,7 @@ public class TranslateTaskControllers {
             case UK -> task.getShuffleTranslateWords();
             case EN -> task.getShuffleContentWords();
         };
-        Map<String, Boolean> response = new HashMap<>();
+        Map<Integer, Boolean> response = new HashMap<>();
         for (int i = 0; i < answear.length; i++) {
             WordProgress wordProgress = wordProgressRepository.findByUserAndWordName(user, answear[i]);
             if (wordProgress == null) {
@@ -80,9 +80,9 @@ public class TranslateTaskControllers {
             if (answear[i].equals(targetWords.get(i))) {
                 wordProgress.incProgress();
                 wordProgressRepository.save(wordProgress);
-                response.put(answear[i], true);
+                response.put(i, true);
             } else {
-                response.put(answear[i], false);
+                response.put(i, false);
             }
         }
         return ResponseEntity.ok(response);
