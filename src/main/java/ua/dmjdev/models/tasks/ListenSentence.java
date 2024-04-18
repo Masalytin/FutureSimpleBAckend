@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Entity
 @Data
-public class ListeningTask extends Task {
+public class ListenSentence extends Task implements Grammar, Listening, Vocabulary {
 
 }

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @Entity
 @Data
 @Table(name = "translate_tasks")
-public class TranslateTask extends Task {
+public class TranslateSentence extends Task implements Grammar, Vocabulary {
     private String translate;
     @Enumerated(EnumType.STRING)
     private Rule rule;

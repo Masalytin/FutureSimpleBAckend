@@ -5,14 +5,16 @@ import lombok.Data;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 @Entity
 @Data
-public class ReadingTask extends Task {
+public class TextOrderingTask extends Task implements Grammar, Reading, Vocabulary {
 
     public List<String> getMixedContentSentences() {
-        List<String> sentences = List.of(content.split("\\n"));
+        List<String> sentences = new ArrayList<>();
+        Collections.addAll(sentences, content.split("\\n"));
         Collections.shuffle(sentences, new Random());
         return sentences;
     }

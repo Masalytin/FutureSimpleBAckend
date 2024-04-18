@@ -11,5 +11,4 @@ public class WordProgressService {
     public WordProgressService(WordProgressRepository repository) {
         this.repository = repository;
     }
-
 }

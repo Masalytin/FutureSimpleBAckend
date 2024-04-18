@@ -8,5 +8,6 @@ import ua.dmjdev.models.usr.User;
 @Repository
 public interface WordProgressRepository extends JpaRepository<WordProgress, Long> {
 
-    public WordProgress findByUserAndWordName(User user, String wordName);
+    WordProgress findByUserAndWordName(User user, String wordName);
+    boolean existsByUserAndWordName(User user, String wordName);
 }

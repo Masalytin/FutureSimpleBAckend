@@ -7,6 +7,7 @@ import ua.dmjdev.models.dictionary.WordProgress;
 import ua.dmjdev.models.usr.RuleProgress;
 import ua.dmjdev.models.usr.User;
 import ua.dmjdev.repos.UserRepository;
+import ua.dmjdev.repos.WordProgressRepository;
 
 import java.util.List;
 import java.util.Random;
@@ -18,14 +19,18 @@ public class UserService {
     private final NPLService nplService;
     private final WordService wordService;
     private final UserRepository repository;
+    private final WordProgressRepository wordProgressRepository;
 
-    public UserService(RuleProgressService ruleProgressService, NPLService nplService, WordService wordService, UserRepository repository) {
+    public UserService(RuleProgressService ruleProgressService, NPLService nplService, WordService wordService, UserRepository repository,
+                       WordProgressRepository wordProgressRepository) {
         this.ruleProgressService = ruleProgressService;
         this.nplService = nplService;
         this.wordService = wordService;
         this.repository = repository;
+        this.wordProgressRepository = wordProgressRepository;
     }
 
+    //TODO May it not be needed
     public void addUserWordsProgressFromSentence(User user, String sentence) {
         Set<String> words = nplService.getWordsFromSentence(sentence);
         for (WordProgress wordProgress : user.getDictionary()) {
@@ -44,8 +49,10 @@ public class UserService {
 
     public void addNewWordForUser(User user, String newWord) {
         Word word = wordService.saveWord(newWord);
-        user.getDictionary().add(new WordProgress(word));
-        repository.save(user);
+        if (!wordProgressRepository.existsByUserAndWordName(user, newWord)) {
+            user.getDictionary().add(new WordProgress(word));
+            repository.save(user);
+        }
     }
 
     public List<RuleProgress> getActualRuleProgressesForUser(User user) {
