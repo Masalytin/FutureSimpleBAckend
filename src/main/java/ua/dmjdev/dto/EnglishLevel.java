@@ -39,8 +39,7 @@ public enum EnglishLevel {
             Rule.PAST_PERFECT,
             Rule.AGREEMENT_OF_TENSES,
             Rule.PRESENT_PERFECT_CONTINUOUS,
-            Rule.PASSIVE_VOICE,
-            Rule.IRREGULAR_PLURAL_FORMS
+            Rule.PASSIVE_VOICE
     )),
     ADVANCED(List.of(
             Rule.PUNCTUATION,
