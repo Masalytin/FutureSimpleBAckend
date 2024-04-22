@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ua.dmjdev.dto.Rule;
-import ua.dmjdev.models.tasks.TranslateSentence;
+import ua.dmjdev.models.tasks.grammar.TranslateSentence;
 
 @Repository
 public interface TranslateSentenceTaskRepository extends JpaRepository<TranslateSentence, Long> {

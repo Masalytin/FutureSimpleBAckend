@@ -1,15 +1,17 @@
-package ua.dmjdev.controllers;
+package ua.dmjdev.controllers.tasks;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.dmjdev.dto.Language;
 import ua.dmjdev.models.dictionary.WordProgress;
-import ua.dmjdev.models.tasks.TranslateSentence;
+import ua.dmjdev.models.lesons.Lesson;
+import ua.dmjdev.models.tasks.grammar.TranslateSentence;
 import ua.dmjdev.models.usr.User;
+import ua.dmjdev.repos.LessonRepository;
 import ua.dmjdev.repos.TranslateSentenceTaskRepository;
 import ua.dmjdev.repos.UserRepository;
 import ua.dmjdev.repos.WordProgressRepository;
-import ua.dmjdev.service.TranslateSentenseTaskService;
+import ua.dmjdev.service.tasks.TranslateSentenceTaskService;
 import ua.dmjdev.service.WordService;
 
 import java.util.HashMap;
@@ -17,20 +19,22 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/translate-task")
+@RequestMapping("/api/v1/tasks/translate-task")
 public class TranslateSentenceTaskController {
     private final TranslateSentenceTaskRepository repository;
-    private final TranslateSentenseTaskService service;
+    private final TranslateSentenceTaskService service;
     private final UserRepository userRepository;
     private final WordProgressRepository wordProgressRepository;
     private final WordService wordService;
+    private final LessonRepository lessonRepository;
 
-    public TranslateSentenceTaskController(TranslateSentenceTaskRepository repository, TranslateSentenseTaskService service, UserRepository userRepository, WordProgressRepository wordProgressRepository, WordService wordService) {
+    public TranslateSentenceTaskController(TranslateSentenceTaskRepository repository, TranslateSentenceTaskService service, UserRepository userRepository, WordProgressRepository wordProgressRepository, WordService wordService, LessonRepository lessonRepository) {
         this.repository = repository;
         this.service = service;
         this.userRepository = userRepository;
         this.wordProgressRepository = wordProgressRepository;
         this.wordService = wordService;
+        this.lessonRepository = lessonRepository;
     }
 
     @GetMapping("/{id}")
@@ -50,9 +54,10 @@ public class TranslateSentenceTaskController {
         return ResponseEntity.ok(newTask);
     }
 
-    @GetMapping("/check-answear")
+    @GetMapping("/check-answer")
     public ResponseEntity<?> checkTaskAnswear(
             @RequestParam("user-id") long userId,
+            @RequestParam("lesson_id") long lessonId,
             @RequestParam("task_id") long taskId,
             @RequestParam("answear") String[] answear,
             @RequestParam("target_language") Language targetLanguage
@@ -60,6 +65,9 @@ public class TranslateSentenceTaskController {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null)
             return ResponseEntity.status(404).body(Map.of("Error", "user not found"));
+        Lesson lesson = lessonRepository.findById(lessonId).orElse(null);
+        if (lesson == null)
+            return ResponseEntity.status(404).body(Map.of("Error", "lesson not found"));
         TranslateSentence task = repository.findById(taskId).orElse(null);
         if (task == null)
             return ResponseEntity.status(404).body(Map.of("Error", "task not found"));

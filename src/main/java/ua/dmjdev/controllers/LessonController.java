@@ -18,7 +18,7 @@ public class LessonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getLesson(@PathVariable int id) {
+    public ResponseEntity<?> getLesson(@PathVariable long id) {
         Lesson lesson = repository.findById(id).orElse(null);
         if (lesson == null)
             return ResponseEntity.notFound().build();

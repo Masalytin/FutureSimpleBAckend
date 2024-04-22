@@ -6,7 +6,6 @@ import ua.dmjdev.dto.LessonTheme;
 import ua.dmjdev.models.tasks.Task;
 import ua.dmjdev.models.usr.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
@@ -16,7 +15,7 @@ import java.util.Set;
 public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private LessonTheme theme;
     @ManyToOne
     private User user;
@@ -26,4 +25,21 @@ public class Lesson {
     private Set<Task> completedTasks;
     @ManyToMany
     private Queue<Task> uncompletedTasks;
+    private byte lives;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public Lesson() {
+        this.lives = 3;
+    }
+
+    private void setLives(byte lives) {}
+
+    public void decrementLives() {
+        this.lives--;
+    }
+
+    public enum Status {
+        IN_PROGRESS, COMPLETED, UNCOMPLETED
+    }
 }

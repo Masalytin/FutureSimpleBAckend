@@ -39,8 +39,8 @@ public class ChatAssistant {
             Focus on the user's level of English.
             If the user makes grammatical or vocabulary mistakes, correct them and continue the dialogue on a new line.
             Your role is a %s.
-            The setting: a %s.
-            The level of the user's English: %s
+            The theme is a %s.
+            The level of the user's English is a %s
             """, theme.getRole(), theme, EnglishLevel.BEGINNER));
         addNewMessage(Role.ASSISTANT, "Generate first message for start a dialog");
     }
