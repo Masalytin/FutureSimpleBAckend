@@ -1,4 +1,4 @@
-package ua.dmjdev.controllers;
+package ua.dmjdev.controllers.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

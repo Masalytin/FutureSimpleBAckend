@@ -1,4 +1,4 @@
-package ua.dmjdev.service;
+package ua.dmjdev.util;
 
 import opennlp.tools.lemmatizer.DictionaryLemmatizer;
 import opennlp.tools.postag.POSModel;
@@ -6,7 +6,6 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,10 +13,9 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
-@Service
-public class NPLService {
+public class NPLUtil {
 
-    public Set<String> getWordsFromSentence(String sentence) {
+    public static Set<String> getWordsFromSentence(String sentence) {
         try {
             InputStream tokenizerStream = new FileInputStream(new ClassPathResource("npl/en-token.bin").getFile().getAbsolutePath());
             TokenizerModel tokenizerModel = new TokenizerModel(tokenizerStream);

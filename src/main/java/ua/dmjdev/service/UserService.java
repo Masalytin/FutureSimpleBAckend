@@ -4,10 +4,12 @@ import org.springframework.stereotype.Service;
 import ua.dmjdev.dto.Rule;
 import ua.dmjdev.models.dictionary.Word;
 import ua.dmjdev.models.dictionary.WordProgress;
+import ua.dmjdev.models.dictionary.WordsSet;
 import ua.dmjdev.models.usr.RuleProgress;
 import ua.dmjdev.models.usr.User;
 import ua.dmjdev.repos.UserRepository;
 import ua.dmjdev.repos.WordProgressRepository;
+import ua.dmjdev.util.NPLUtil;
 
 import java.util.List;
 import java.util.Random;
@@ -16,15 +18,13 @@ import java.util.Set;
 @Service
 public class UserService {
     private final RuleProgressService ruleProgressService;
-    private final NPLService nplService;
     private final WordService wordService;
     private final UserRepository repository;
     private final WordProgressRepository wordProgressRepository;
 
-    public UserService(RuleProgressService ruleProgressService, NPLService nplService, WordService wordService, UserRepository repository,
+    public UserService(RuleProgressService ruleProgressService, WordService wordService, UserRepository repository,
                        WordProgressRepository wordProgressRepository) {
         this.ruleProgressService = ruleProgressService;
-        this.nplService = nplService;
         this.wordService = wordService;
         this.repository = repository;
         this.wordProgressRepository = wordProgressRepository;
@@ -32,7 +32,7 @@ public class UserService {
 
     //TODO May it not be needed
     public void addUserWordsProgressFromSentence(User user, String sentence) {
-        Set<String> words = nplService.getWordsFromSentence(sentence);
+        Set<String> words = NPLUtil.getWordsFromSentence(sentence);
         for (WordProgress wordProgress : user.getDictionary()) {
             String word = wordProgress.getWord().getName();
             if (words.contains(word)) {
@@ -45,6 +45,16 @@ public class UserService {
         for (String word : words) {
             addNewWordForUser(user, word);
         }
+    }
+
+    public void addWordFromWordsSetToUserDictionary(User user, WordsSet wordsSet) {
+        if (!user.getAddedWordsSets().contains(wordsSet)) {
+            for (Word word : wordsSet.getWords()) {
+                addNewWordForUser(user, word.getName());
+            }
+        }
+        user.getAddedWordsSets().add(wordsSet);
+        repository.save(user);
     }
 
     public void addNewWordForUser(User user, String newWord) {

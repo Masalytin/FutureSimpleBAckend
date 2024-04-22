@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import ua.dmjdev.dto.EnglishLevel;
 import ua.dmjdev.models.dictionary.WordProgress;
+import ua.dmjdev.models.dictionary.WordsSet;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,6 +39,8 @@ public class User {
     @MapKeyJoinColumn(name = "param_key")
     @Column(name = "value", length = 1000)
     private Map<String, String> buffer;
+    @ManyToMany
+    private List<WordsSet> addedWordsSets;
 
     public String getParamFromBuffer(String key) {
         String param = getBuffer().get(key);
