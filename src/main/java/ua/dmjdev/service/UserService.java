@@ -63,9 +63,9 @@ public class UserService {
         if (!wordProgressRepository.existsByUserAndWordName(user, newWord)) {
             WordProgress wordProgress = new WordProgress(word);
             wordProgress.setUser(user);
-            user.getDictionary().add(wordProgress);
+            WordProgress save = wordProgressRepository.save(wordProgress);
+            user.getDictionary().add(save);
             repository.save(user);
-            wordProgressRepository.save(wordProgress);
         }
     }
 

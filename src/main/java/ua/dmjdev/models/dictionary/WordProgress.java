@@ -12,12 +12,14 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class WordProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToOne
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
