@@ -17,7 +17,6 @@ public class VoiceAssistantController {
     public ResponseEntity<?> getState(
             @RequestParam String request
     ) {
-
-
+        return null;
     }
 }
