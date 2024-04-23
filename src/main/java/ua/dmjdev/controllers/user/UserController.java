@@ -44,7 +44,7 @@ public class UserController {
         WordsSet wordsSet = wordSetRepository.findById(wordSetId).orElse(null);
         if (wordsSet == null)
             return ResponseEntity.status(404).body(Map.of("Error", "word set not found"));
-        service.addWordFromWordsSetToUserDictionary(user, wordsSet);
+        service.addWordsFromWordsSetToUserDictionary(user, wordsSet);
         return ResponseEntity.ok("success");
     }
 
@@ -55,4 +55,13 @@ public class UserController {
             return ResponseEntity.status(404).body(Map.of("Error", "user not found"));
         return ResponseEntity.ok(user.getBuffer());
     }
+
+    @GetMapping("/{id}/dictionary")
+    public ResponseEntity<?> getDictionary(@PathVariable("id") long userId) {
+        User user = repository.findById(userId).orElse(null);
+        if (user == null)
+            return ResponseEntity.status(404).body(Map.of("Error", "user not found"));
+        return ResponseEntity.ok(user.getDictionary());
+    }
 }
+

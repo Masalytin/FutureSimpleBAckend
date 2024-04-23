@@ -55,12 +55,12 @@ public class TranslateSentenceTaskController {
     }
 
     @GetMapping("/check-answer")
-    public ResponseEntity<?> checkTaskAnswear(
+    public ResponseEntity<?> checkTaskAnswer(
             @RequestParam("user-id") long userId,
             @RequestParam("lesson_id") long lessonId,
             @RequestParam("task_id") long taskId,
-            @RequestParam("answear") String[] answear,
-            @RequestParam("target_language") Language targetLanguage
+            @RequestParam("answer") String[] answear,
+            @RequestParam(" target_language") Language targetLanguage
     ) {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null)
@@ -80,7 +80,6 @@ public class TranslateSentenceTaskController {
             WordProgress wordProgress = wordProgressRepository.findByUserAndWordName(user, answear[i]);
             if (wordProgress == null) {
                 wordProgress = new WordProgress();
-                wordProgress.setUser(user);
                 wordProgress.setProgress((byte) 0);
                 wordProgress.setWord(wordService.getWord(answear[i]));
                 wordProgressRepository.save(wordProgress);

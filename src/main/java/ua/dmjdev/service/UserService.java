@@ -9,6 +9,7 @@ import ua.dmjdev.models.usr.RuleProgress;
 import ua.dmjdev.models.usr.User;
 import ua.dmjdev.repos.UserRepository;
 import ua.dmjdev.repos.WordProgressRepository;
+import ua.dmjdev.service.progress.RuleProgressService;
 import ua.dmjdev.util.NPLUtil;
 
 import java.util.List;
@@ -47,21 +48,24 @@ public class UserService {
         }
     }
 
-    public void addWordFromWordsSetToUserDictionary(User user, WordsSet wordsSet) {
+    public void addWordsFromWordsSetToUserDictionary(User user, WordsSet wordsSet) {
         if (!user.getAddedWordsSets().contains(wordsSet)) {
             for (Word word : wordsSet.getWords()) {
                 addNewWordForUser(user, word.getName());
             }
+            user.getAddedWordsSets().add(wordsSet);
         }
-        user.getAddedWordsSets().add(wordsSet);
         repository.save(user);
     }
 
     public void addNewWordForUser(User user, String newWord) {
         Word word = wordService.saveWord(newWord);
         if (!wordProgressRepository.existsByUserAndWordName(user, newWord)) {
-            user.getDictionary().add(new WordProgress(word));
+            WordProgress wordProgress = new WordProgress(word);
+            wordProgress.setUser(user);
+            user.getDictionary().add(wordProgress);
             repository.save(user);
+            wordProgressRepository.save(wordProgress);
         }
     }
 

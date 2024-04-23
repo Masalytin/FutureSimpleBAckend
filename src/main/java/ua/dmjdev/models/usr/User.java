@@ -1,7 +1,7 @@
 package ua.dmjdev.models.usr;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import ua.dmjdev.dto.EnglishLevel;
 import ua.dmjdev.models.dictionary.WordProgress;
 import ua.dmjdev.models.dictionary.WordsSet;
@@ -12,7 +12,10 @@ import java.util.Map;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,9 +29,9 @@ public class User {
     private List<String> interests;
     @Enumerated(EnumType.STRING)
     private EnglishLevel englishLevel;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<WordProgress> dictionary;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<RuleProgress> ruleProgressList;
     private int experience;
     private LocalDateTime registrationDateTime;
@@ -40,7 +43,7 @@ public class User {
     @Column(name = "value", length = 1000)
     private Map<String, String> buffer;
     @ManyToMany
-    private List<WordsSet> addedWordsSets;
+    private Set<WordsSet> addedWordsSets;
 
     public String getParamFromBuffer(String key) {
         String param = getBuffer().get(key);

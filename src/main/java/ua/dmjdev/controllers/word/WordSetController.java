@@ -1,4 +1,4 @@
-package ua.dmjdev.controllers;
+package ua.dmjdev.controllers.word;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

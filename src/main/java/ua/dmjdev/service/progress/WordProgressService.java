@@ -1,7 +1,6 @@
-package ua.dmjdev.service;
+package ua.dmjdev.service.progress;
 
 import org.springframework.stereotype.Service;
-import ua.dmjdev.models.dictionary.WordProgress;
 import ua.dmjdev.repos.WordProgressRepository;
 
 @Service
