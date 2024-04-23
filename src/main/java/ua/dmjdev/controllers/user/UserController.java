@@ -44,6 +44,8 @@ public class UserController {
         WordsSet wordsSet = wordSetRepository.findById(wordSetId).orElse(null);
         if (wordsSet == null)
             return ResponseEntity.status(404).body(Map.of("Error", "word set not found"));
+        if (user.getAddedWordsSets().contains(wordsSet))
+            return ResponseEntity.status(409).body(Map.of("Error", "word set already added"));
         service.addWordsFromWordsSetToUserDictionary(user, wordsSet);
         return ResponseEntity.ok("success");
     }
