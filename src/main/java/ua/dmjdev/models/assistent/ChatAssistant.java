@@ -9,6 +9,7 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.openai.api.OpenAiApi.ChatCompletionMessage.Role;
 import ua.dmjdev.dto.EnglishLevel;
 import ua.dmjdev.models.usr.User;
+import ua.dmjdev.util.PromptsUtil;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,16 +33,7 @@ public class ChatAssistant {
         this.theme = theme;
         this.user = user;
         this.messages = new ArrayList<>();
-        addNewMessage(Role.SYSTEM, String.format("""
-            You are an English teacher and you need to get into the role.
-            Do not answer questions that are not relevant to your role and topic.
-            Answer only in English. If the user communicates with you in another language, you should pretend not to understand.
-            Focus on the user's level of English.
-            If the user makes grammatical or vocabulary mistakes, correct them and continue the dialogue on a new line.
-            Your role is a %s.
-            The theme is a %s.
-            The level of the user's English is a %s
-            """, theme.getRole(), theme, EnglishLevel.BEGINNER));
+        addNewMessage(Role.SYSTEM, String.format(PromptsUtil.CHAT_ASSISTANT_PROMPT_FORMAT, theme.getRole(), theme, EnglishLevel.BEGINNER));
         addNewMessage(Role.ASSISTANT, "Generate first message for start a dialog");
     }
 
