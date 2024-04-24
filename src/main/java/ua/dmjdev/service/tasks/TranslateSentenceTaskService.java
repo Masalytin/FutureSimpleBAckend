@@ -1,6 +1,9 @@
 package ua.dmjdev.service.tasks;
 
 import org.springframework.ai.chat.ChatClient;
+import org.springframework.ai.chat.messages.AssistantMessage;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.stereotype.Service;
 import ua.dmjdev.dto.Language;
 import ua.dmjdev.dto.Rule;
@@ -10,9 +13,7 @@ import ua.dmjdev.models.usr.User;
 import ua.dmjdev.repos.TranslateSentenceTaskRepository;
 import ua.dmjdev.service.TranslateService;
 import ua.dmjdev.service.UserService;
-import ua.dmjdev.service.constants.Prompts;
-
-import java.util.*;
+import ua.dmjdev.util.PromptsUtil;
 
 @Service
 public class TranslateSentenceTaskService {
@@ -47,7 +48,14 @@ public class TranslateSentenceTaskService {
     public TranslateSentence generateTaskByRule(Rule rule) {
         TranslateSentence result = new TranslateSentence();
         result.setRule(rule);
-        String generatedSentence = chatClient.call(Prompts.SENTENCE_BY_RULE_PROMPT_TEMPLATE.create(Map.of("rule", rule))).getResult().getOutput().getContent();
+        AssistantMessage assistantMessage = new AssistantMessage(String.format(PromptsUtil.SENTENCE_BY_RULE_PROMPT_FORMAT,
+                rule));
+        OpenAiChatOptions chatOptions = new OpenAiChatOptions();
+        chatOptions.setModel("gpt-4");
+        chatOptions.setTemperature(0.8f);
+        chatOptions.setMaxTokens(50);
+        chatOptions.setTopP(1f);
+        String generatedSentence = chatClient.call(new Prompt(assistantMessage, chatOptions)).getResult().getOutput().getContent();
         result.setSentence(generatedSentence);
         result.setTranslate(translateService.translate(generatedSentence, Language.EN, Language.UK));
         return result;
