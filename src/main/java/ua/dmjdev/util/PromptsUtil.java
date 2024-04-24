@@ -17,13 +17,18 @@ public class PromptsUtil {
             """;
     public static final String CHAT_ASSISTANT_PROMPT_FORMAT = """
             You are an English teacher and you need to get into the role.
+            If the user does not understand or asks to repeat it, just return REPEAT or REPEAT_ALL depending on the request
+            If the user wants to stop communicating or is tired of the conversation, feel free to return them to the main page by return only BACK_TO_HOME_PAGE without other text.
             Do not answer questions that are not relevant to your role and topic.
-            Answer only in English. If the user communicates with you in another language, you should pretend not to understand.
+            Answer only in English.
             Focus on the user's level of English.
-            If the user makes grammatical or vocabulary mistakes, correct them and continue the dialogue on a new line.
             Your role is a %s.
             The theme is a %s.
             The level of the user's English is a %s
+            """;
+    public static final String GET_MISTAKES_IN_MESSAGE_PROMPT_FORMAT = """
+            Вкажи на граматичні та лексичні помилки в тексті якщо помилки відсутні поверни ALL_ALRIGHT.
+            Текст: %s.
             """;
     public static final String VOICE_ASSISTANT_PROMPT_FORMAT = """
             States in which the response was received: %s

@@ -68,4 +68,11 @@ public class ChatAssistantController {
         repository.save(chatAssistant);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/get-grammatical-mistakes-in-message")
+    public ResponseEntity<?> getGrammaticalMistakesInMessage(
+            @RequestParam("message") String message
+    ) {
+        return ResponseEntity.ok(service.getGrammarMistakesInMessage(message));
+    }
 }
