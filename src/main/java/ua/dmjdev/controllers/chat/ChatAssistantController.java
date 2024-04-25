@@ -5,12 +5,14 @@ import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.openai.api.OpenAiApi.ChatCompletionMessage.Role;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.dmjdev.dto.Language;
 import ua.dmjdev.models.assistent.ChatAssistant;
 import ua.dmjdev.models.assistent.Theme;
 import ua.dmjdev.models.usr.User;
 import ua.dmjdev.repos.ChatAssistantRepository;
 import ua.dmjdev.repos.UserRepository;
 import ua.dmjdev.service.ChatAssistantService;
+import ua.dmjdev.service.TranslateService;
 
 import java.util.Map;
 
@@ -21,12 +23,14 @@ public class ChatAssistantController {
     private final ChatAssistantRepository repository;
     private final ChatAssistantService service;
     private final UserRepository userRepository;
+    private final TranslateService translateService;
 
-    public ChatAssistantController(ChatClient chatClient, ChatAssistantRepository repository, ChatAssistantService service, UserRepository userRepository) {
+    public ChatAssistantController(ChatClient chatClient, ChatAssistantRepository repository, ChatAssistantService service, UserRepository userRepository, TranslateService translateService) {
         this.chatClient = chatClient;
         this.repository = repository;
         this.service = service;
         this.userRepository = userRepository;
+        this.translateService = translateService;
     }
 
     @PostMapping("/new-chat")
@@ -64,6 +68,11 @@ public class ChatAssistantController {
         if (!chatAssistant.getUser().equals(user))
             return ResponseEntity.status(301).body(Map.of("Error", "User is not chat creator"));
         String response = service.getResponse(chatAssistant, newMessageText).getContent();
+        if (response.equals("TRANSLATE"))
+            return ResponseEntity.ok(translateService.translate(
+                    chatAssistant.getMessages().get(chatAssistant.getMessages().size() - 2).getContent(),
+                    Language.EN, Language.UK
+            ));
         chatAssistant.addNewMessage(Role.ASSISTANT, response);
         repository.save(chatAssistant);
         return ResponseEntity.ok(response);

@@ -36,16 +36,18 @@ public class UserController {
     @PostMapping("/add-words-from-word-set")
     public ResponseEntity<?> addWordsFromWordSet(
             @RequestParam("user-id") long userId,
-            @RequestParam("word-set-id") int wordSetId
+            @RequestParam("name") String wordSerName
     ) {
         User user = repository.findById(userId).orElse(null);
         if (user == null)
             return ResponseEntity.status(404).body(Map.of("Error", "user not found"));
-        WordsSet wordsSet = wordSetRepository.findById(wordSetId).orElse(null);
+        WordsSet wordsSet = wordSetRepository.findFirstByName(wordSerName);
         if (wordsSet == null)
             return ResponseEntity.status(404).body(Map.of("Error", "word set not found"));
+        if (user.getAddedWordsSets().contains(wordsSet))
+            return ResponseEntity.status(409).body(Map.of("Error", "this word set already added"));
         service.addWordsFromWordsSetToUserDictionary(user, wordsSet);
-        return ResponseEntity.ok("success");
+        return ResponseEntity.status(201).body("success");
     }
 
     @GetMapping("{id}/buffer")
