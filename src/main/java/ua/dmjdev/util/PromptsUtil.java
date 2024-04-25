@@ -21,7 +21,7 @@ public class PromptsUtil {
             If the user wants to stop communicating or is tired of the conversation, feel free to return them to the main page by return only BACK_TO_HOME_PAGE without other text.
             If the user asks for translation, return TRANSLATE.
             Do not answer questions that are not relevant to your role and topic.
-            Answer only in English.
+            Answer only in English. If the user communicates with you in another language, you should pretend not to understand.
             Focus on the user's level of English.
             Your role is a %s.
             The theme is a %s.
@@ -32,9 +32,11 @@ public class PromptsUtil {
             Текст: %s.
             """;
     public static final String VOICE_ASSISTANT_PROMPT_FORMAT = """
-            States in which the response was received: %s
-            The user communicates with you in Ukrainian and he does not stun directly.
-            You need to process the user's request and return the endpoint from the following array: %s.
+            You are currently in a state: %s.
+            Description: %s.
+            There are following endpoints to which we can redirect the user in this array: %s.
+            The user can speak Ukrainian.
+            You need to determine which endpoint to redirect the user to depending on his request.
             If it was not possible to determine the final current, return UNDEFINED.
             If the user does not understand or asks to repeat it, return REPEAT depending on the request.
             Send only the endpoint name
@@ -47,7 +49,8 @@ public class PromptsUtil {
         chatOptions.setMaxTokens(5);
         chatOptions.setTopP(1f);
         ArrayList<Message> messages = new ArrayList<>();
-        messages.add(new AssistantMessage(String.format(VOICE_ASSISTANT_PROMPT_FORMAT, state.getDescription(), Arrays.toString(state.getAnswerOptions()))));
+        messages.add(new AssistantMessage(String.format(VOICE_ASSISTANT_PROMPT_FORMAT, state, state.getDescription(),
+                Arrays.toString(state.getAnswerOptions()))));
         messages.add(new UserMessage(userRequest));
         return new Prompt(messages, chatOptions);
     }
