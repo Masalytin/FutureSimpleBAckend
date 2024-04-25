@@ -33,9 +33,10 @@ public class PromptsUtil {
             """;
     public static final String VOICE_ASSISTANT_PROMPT_FORMAT = """
             States in which the response was received: %s
+            The user communicates with you in Ukrainian and he does not stun directly.
             You need to process the user's request and return the endpoint from the following array: %s.
             If it was not possible to determine the final current, return UNDEFINED.
-            If the user does not understand or asks to repeat it, return REPEAT or REPEAT_ALL depending on the request.
+            If the user does not understand or asks to repeat it, return REPEAT depending on the request.
             Send only the endpoint name
             """;
 
@@ -46,7 +47,7 @@ public class PromptsUtil {
         chatOptions.setMaxTokens(5);
         chatOptions.setTopP(1f);
         ArrayList<Message> messages = new ArrayList<>();
-        messages.add(new AssistantMessage(String.format(VOICE_ASSISTANT_PROMPT_FORMAT, state, Arrays.toString(state.getAnswerOptions()))));
+        messages.add(new AssistantMessage(String.format(VOICE_ASSISTANT_PROMPT_FORMAT, state.getDescription(), Arrays.toString(state.getAnswerOptions()))));
         messages.add(new UserMessage(userRequest));
         return new Prompt(messages, chatOptions);
     }
