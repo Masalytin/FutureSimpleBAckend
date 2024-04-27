@@ -37,3 +37,5 @@ build/
 /src/main/resources/npl/
 
 .env
+
+/src/main/resources/env.properties
