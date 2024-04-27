@@ -13,8 +13,8 @@ import java.util.List;
 public interface WordProgressRepository extends JpaRepository<WordProgress, Long> {
     WordProgress findByUserAndWordName(User user, String wordName);
     boolean existsByUserAndWordName(User user, String wordName);
-    List<WordProgress> findByUserOrderByCreationDateDesc(User user, Pageable pageable);
+    List<WordProgress> findByUserOrderByWordName(User user, Pageable pageable);
     default List<WordProgress> getPageByUser(User user, int page, int pageSize) {
-        return findByUserOrderByCreationDateDesc(user, PageRequest.of(page, pageSize));
+        return findByUserOrderByWordName(user, PageRequest.of(page, pageSize));
     }
 }

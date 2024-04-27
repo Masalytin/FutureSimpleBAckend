@@ -14,7 +14,7 @@ public class VoiceAssistantService {
         this.chatClient = chatClient;
     }
 
-    public String getState(State currentState, String userRequest) {
+    public String getNextState(State currentState, String userRequest) {
         return chatClient.call(PromptsUtil.getVoiceAssistantPrompt(currentState, userRequest))
                 .getResult().getOutput().getContent();
     }
