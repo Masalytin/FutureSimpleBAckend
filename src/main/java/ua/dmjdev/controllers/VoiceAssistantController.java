@@ -22,6 +22,6 @@ public class VoiceAssistantController {
             @RequestParam State currentState,
             @RequestParam String request
     ) {
-        return ResponseEntity.ok(service.getState(currentState, request));
+        return ResponseEntity.ok(service.getNextState(currentState, request));
     }
 }
