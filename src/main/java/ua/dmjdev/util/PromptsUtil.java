@@ -35,7 +35,7 @@ public class PromptsUtil {
             You are currently in a state: %s.
             Description: %s.
             There are following endpoints to which we can redirect the user in this array: %s.
-            The user can speak Ukrainian.
+            The user can speak Ukrainian or English or Russian.
             You need to determine which endpoint to redirect the user to depending on his request.
             If it was not possible to determine the final current, return UNDEFINED.
             If the user does not understand or asks to repeat it, return REPEAT depending on the request.
