@@ -18,8 +18,6 @@ public class PromptsUtil {
             """;
     public static final String CHAT_ASSISTANT_PROMPT_FORMAT = """
             You are an English teacher and you need to get into the role.
-            If the user does not understand or asks to repeat it, just return REPEAT depending on the request
-            If the user wants to stop communicating or is tired of the conversation, feel free to return them to the main page by return only BACK_TO_HOME_PAGE without other text.
             If the user asks for translation, return TRANSLATE.
             Do not answer questions that are not relevant to your role and topic.
             Answer only in English. If the user communicates with you in another language, you should pretend not to understand.
