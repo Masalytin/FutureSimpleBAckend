@@ -1,33 +1,19 @@
-FROM alpine:3.19
+#Before build run in local maven: mvn -N io.takari:maven:wrapper
+FROM eclipse-temurin:17-jdk-alpine as build
+WORKDIR /workspace/app
 
-ARG version=17.0.10.7.1
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
 
-RUN wget -O /THIRD-PARTY-LICENSES-20200824.tar.gz https://corretto.aws/downloads/resources/licenses/alpine/THIRD-PARTY-LICENSES-20200824.tar.gz && \
-    echo "82f3e50e71b2aee21321b2b33de372feed5befad6ef2196ddec92311bc09becb  /THIRD-PARTY-LICENSES-20200824.tar.gz" | sha256sum -c - && \
-    tar x -ovzf THIRD-PARTY-LICENSES-20200824.tar.gz && \
-    rm -rf THIRD-PARTY-LICENSES-20200824.tar.gz && \
-    wget -O /etc/apk/keys/amazoncorretto.rsa.pub https://apk.corretto.aws/amazoncorretto.rsa.pub && \
-    SHA_SUM="6cfdf08be09f32ca298e2d5bd4a359ee2b275765c09b56d514624bf831eafb91" && \
-    echo "${SHA_SUM}  /etc/apk/keys/amazoncorretto.rsa.pub" | sha256sum -c - && \
-    echo "https://apk.corretto.aws" >> /etc/apk/repositories && \
-    apk add --no-cache amazon-corretto-17=$version-r0 && \
-    rm -rf /usr/lib/jvm/java-17-amazon-corretto/lib/src.zip
+RUN --mount=type=cache,target=/root/.m2 ./mvnw install -DskipTests
+RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-
-ENV LANG C.UTF-8
-
-ENV JAVA_HOME=/usr/lib/jvm/default-jvm
-ENV PATH=$PATH:/usr/lib/jvm/default-jvm/bin
-
-WORKDIR /progect
-
-COPY pom.xml pom.xml
-COPY ./src ./src
-
-RUN apk add --no-cache maven
-
-RUN mvn clean
-
-RUN mvn -DskipTests package
-
-ENTRYPOINT ["java", "-jar", "target/LearnAI.jar"]
+FROM eclipse-temurin:17-jdk-alpine
+VOLUME /tmp
+ARG DEPENDENCY=/workspace/app/target/dependency
+COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+ENTRYPOINT ["java","-cp","app:app/lib/*","hello.Application"]
