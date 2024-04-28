@@ -1,28 +1,36 @@
 package ua.dmjdev.models.dictionary;
 
-import com.google.api.Usage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ua.dmjdev.models.usr.User;
 
+import java.time.LocalDate;
+
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class WordProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @ManyToOne
+    @JsonIgnore
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Word word;
     private byte progress;
+    private LocalDate creationDate;
 
     public WordProgress(Word word) {
         this.word = word;
         this.progress = 0;
+        this.creationDate = LocalDate.now();
     }
 
     public void setProgress(byte progress) {

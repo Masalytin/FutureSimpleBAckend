@@ -25,7 +25,6 @@ public enum EnglishLevel {
             Rule.GERUND,
             Rule.MODAL_VERBS_MUST,
             Rule.MODAL_VERBS_HAVE_TO,
-            Rule.RELATIVE_PRONOUNS,
             Rule.MODAL_VERBS_SHOULD,
             Rule.MODAL_VERBS_MAY_MIGHT,
             Rule.MODAL_VERBS_CAN_COULD,
@@ -34,13 +33,11 @@ public enum EnglishLevel {
     INTERMEDIATE(List.of(
             Rule.CONDITIONALS,
             Rule.USED_TO,
-            Rule.INDIRECT_SPEECH,
             Rule.QUESTION_TAGS,
             Rule.PAST_PERFECT,
             Rule.AGREEMENT_OF_TENSES,
             Rule.PRESENT_PERFECT_CONTINUOUS,
-            Rule.PASSIVE_VOICE,
-            Rule.IRREGULAR_PLURAL_FORMS
+            Rule.PASSIVE_VOICE
     )),
     ADVANCED(List.of(
             Rule.PUNCTUATION,

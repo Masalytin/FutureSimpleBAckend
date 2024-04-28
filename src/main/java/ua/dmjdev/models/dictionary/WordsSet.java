@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import ua.dmjdev.dto.EnglishLevel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,10 @@ public class WordsSet {
     private String name;
     @Enumerated(EnumType.STRING)
     private EnglishLevel englishLevel;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Word> words;
+
+    public WordsSet() {
+        this.words = new ArrayList<>();
+    }
 }
